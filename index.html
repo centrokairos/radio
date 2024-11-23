@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es"><head><base href="https://example.com/">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reproductor de Streaming Secuencial</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #player-container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        #live-indicator {
+            font-size: 18px;
+            color: red;
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    </style></head><body>
+
+<div id="player-container">
+    <h1>Reproductor de Streaming</h1>
+    <audio id="audio-player" controls="">
+        <source id="audio-source" src="" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </source>
+    </audio><div id="live-indicator">
+        EN VIVO
+    </div>
+</div>
+
+<script>
+    const audioUrls = [
+        "https://dts.podtrac.com/redirect.mp3/api.spreaker.com/download/episode/62198620/introduccion_al_tantra.mp3",
+        "https://dts.podtrac.com/redirect.mp3/api.spreaker.com/download/episode/62198622/introduccion_tantra2.mp3",
+        "https://dts.podtrac.com/redirect.mp3/api.spreaker.com/download/episode/62198621/tantra_y_chakras.mp3"
+    ];
+
+    let currentTrackIndex = 0;
+
+    const audioElement = document.getElementById("audio-player");
+
+    function loadTrack(index) {
+        audioElement.src = audioUrls[index];
+        audioElement.play();
+    }
+
+    audioElement.onended = function() {
+        playNext();
+    };
+
+    function playNext() {
+        currentTrackIndex = (currentTrackIndex + 1) % audioUrls.length;
+        loadTrack(currentTrackIndex);
+    }
+
+    // Inicializar el primer audio
+    loadTrack(currentTrackIndex);
+</script>
+
+</body></html>
